@@ -20,8 +20,28 @@ public class EmployeeAppService : CrudAppService<Employee, EmployeeDto, Guid, Ge
     protected override async Task<IQueryable<Employee>> CreateFilteredQueryAsync(GetEmployeeInput input)
     {
         var query = await base.CreateFilteredQueryAsync(input);
-        return query.WhereIf(!input.Filter.IsNullOrWhiteSpace(),
+        // 2. Lọc theo ô tìm kiếm chung (Filter) - Tìm trong Name hoặc Code
+        query = query.WhereIf(!input.Filter.IsNullOrWhiteSpace(),
             x => x.Name.Contains(input.Filter!) || x.Code.Contains(input.Filter!));
+
+        // 3. Lọc riêng biệt theo từng trường (Nếu có truyền vào)
+
+        // Tìm chính xác Mã nhân viên
+        query = query.WhereIf(!input.Code.IsNullOrWhiteSpace(), x => x.Code == input.Code);
+
+        // Tìm tên (Dùng Contains để tìm họ hoặc tên đều được)
+        query = query.WhereIf(!input.Name.IsNullOrWhiteSpace(), x => x.Name.Contains(input.Name!));
+
+        // Tìm chính xác Bộ phận
+        query = query.WhereIf(!input.Department.IsNullOrWhiteSpace(), x => x.Department == input.Department);
+
+        // Tìm chính xác Giới tính
+        query = query.WhereIf(!input.Sex.IsNullOrWhiteSpace(), x => x.Sex == input.Sex);
+
+        // Tìm chính xác mức Lương
+        query = query.WhereIf(input.Salary.HasValue, x => x.Salary == input.Salary);
+
+        return query;
     }
 
     // API THÊM NHIỀU
