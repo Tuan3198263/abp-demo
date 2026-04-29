@@ -5,9 +5,11 @@ using EmpManager.Employees;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Application.Dtos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EmpManager.Employees;
 
+[Authorize]
 public class EmployeeAppService : CrudAppService<Employee, EmployeeDto, Guid, GetEmployeeInput>, IEmployeeAppService
 {
     public EmployeeAppService(IRepository<Employee, Guid> repository) : base(repository)
