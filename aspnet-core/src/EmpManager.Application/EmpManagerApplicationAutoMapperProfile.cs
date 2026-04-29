@@ -11,6 +11,6 @@ public class EmpManagerApplicationAutoMapperProfile : Profile
         CreateMap<Employee, EmployeeDto>();
 
         // 2. Ánh xạ từ DTO sang Entity
-        CreateMap<EmployeeDto, Employee>();
+        CreateMap<CreateUpdateEmployeeDto, Employee>();
     }
 }
