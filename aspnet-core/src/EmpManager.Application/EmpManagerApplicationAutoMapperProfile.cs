@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EmpManager.Employees; // PHẢI CÓ DÒNG NÀY
 
 namespace EmpManager;
 
@@ -6,8 +7,10 @@ public class EmpManagerApplicationAutoMapperProfile : Profile
 {
     public EmpManagerApplicationAutoMapperProfile()
     {
-        /* You can configure your AutoMapper mapping configuration here.
-         * Alternatively, you can split your mapping configurations
-         * into multiple profile classes for a better organization. */
+        // 1. Ánh xạ từ Entity sang DTO
+        CreateMap<Employee, EmployeeDto>();
+
+        // 2. Ánh xạ từ DTO sang Entity
+        CreateMap<EmployeeDto, Employee>();
     }
 }

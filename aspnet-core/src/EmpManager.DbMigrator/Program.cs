@@ -36,6 +36,10 @@ class Program
             .ConfigureLogging((context, logging) => logging.ClearProviders())
             .ConfigureServices((hostContext, services) =>
             {
+                // --- THÊM DÒNG NÀY ĐỂ KIỂM TRA ---
+                var connString = hostContext.Configuration.GetConnectionString("Default");
+                Log.Information("DEBUG: ConnectionString is: {0}", connString ?? "NULL (Không tìm thấy!)");
+                // ---------------------------------
                 services.AddHostedService<DbMigratorHostedService>();
             });
 }
